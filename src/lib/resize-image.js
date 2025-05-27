@@ -16,12 +16,12 @@
  */
 export function resizeImage(orig, ow, oh, nw, nh, opts={}) {
   let newImg = new Uint8Array(nw * nh * 4);
-  // Default to transparent black if rgba not provided
   let {
     rgba = [0, 0, 0, 0],
-    anchor = "top-left"
+    anchor = "top left"
   } = opts;
-  rgba = rgba.map(v => (v < 0 ? 0 : (v > 255 ? 255 : v)))
+  // @ts-ignore
+  rgba = rgba.map(v => (v < 0 ? 0 : (v > 255 ? 255 : v)));
 
   // if padding is necessary, fill the entire new image with the padding color first
   if (nw > ow || nh > oh) {
