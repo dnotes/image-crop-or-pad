@@ -1,10 +1,20 @@
 {
 	"name": "image-crop-or-pad",
 	"version": "1.0.0",
+  "description": "A tiny, fully-tested utility to resize raw image data in node or browser, intended for visual regression testing.",
 	"type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "exports": {
+    "import": "./dist/index.esm.js",
+    "require": "./dist/index.cjs.js"
+  },
+  "files": [
+    "dist"
+  ],
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "rollup -c && vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
