@@ -1,0 +1,38 @@
+{
+  "name": "image-crop-or-pad",
+  "version": "1.0.0",
+  "description": "Crop or pad an image, using only the raw data. Tiny, no dependencies.",
+  "main": "src/index.js",
+  "scripts": {
+    "test:ci": "vitest --no-watch",
+    "test:watch": "vitest",
+    "test": "vitest --no-watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dnotes/image-crop-or-pad.git"
+  },
+  "keywords": [
+    "image",
+    "resize",
+    "crop",
+    "pad",
+    "visual",
+    "regression",
+    "testing",
+    "pixelmatch"
+  ],
+  "author": "David Hunt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dnotes/image-crop-or-pad/issues"
+  },
+  "homepage": "https://github.com/dnotes/image-crop-or-pad#readme",
+  "devDependencies": {
+    "@quickpickle/vitest-browser": "^0.2.0",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "quickpickle": "^1.9.0",
+    "vitest": "^3.1.4"
+  }
+}
