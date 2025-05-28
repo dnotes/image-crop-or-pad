@@ -113,6 +113,7 @@
         rgba[2]=colors[value]?.[2] ?? 0;
         rgba[3]=value === 'transparent' ? 0 : 255;
       }}>
+        <option value="transparent">transparent</option>
         {#each Object.keys(colors) as item}
           <option value="{item}">{item}</option>
         {/each}
