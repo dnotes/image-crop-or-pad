@@ -6,6 +6,7 @@ import { expect } from 'vitest'
 import { Buffer } from 'buffer'
 import { PNG } from 'pngjs/browser'
 import colors from 'color-name'
+import '../../src/app.css'
 
 Then('the {string} img should be {int}x{int}', async function (world, name, w, h) {
   let img = await world.page.getByRole('img', { name })
@@ -28,6 +29,5 @@ Then('the {anchor} pixel should be {string}', async function(world, anchor, colo
   let y = anchor.includes('top') ? 0 : anchor.includes('bottom') ? height - 1 : Math.floor(height / 2)
   let rgb = colors[color]
   let pixelStart = y * width * 4 + x * 4
-  console.log(pixelStart)
   expect(data.slice(pixelStart, pixelStart + 3)).toEqual(rgb)
 })

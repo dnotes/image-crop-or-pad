@@ -7,7 +7,7 @@ Feature: ImageResizer.svelte
     And the "preview" img should be 100x100
     And I should see a "Width" input
     And I should see a "Height" input
-    And I should see a "Padding Color" input
+    And I should see a "Color" input
     And I should see an "Anchor" input
 
   Scenario: With a label
@@ -15,7 +15,7 @@ Feature: ImageResizer.svelte
       | label | Image 1 |
     Then I should see an "Image 1 Width" input
     And I should see a "Image 1 Height" input
-    And I should see an "Image 1 Padding Color" input
+    And I should see an "Image 1 Color" input
     And I should see an "Image 1 Anchor" input
 
   Rule: Options must be supported

@@ -73,7 +73,8 @@
 
 </script>
 
-<div class="image-resizer">
+<div class="image-resizer flex flex-row-reverse">
+
   <div class="controls">
     <div class="control-group">
       <label for="width">{label} Width</label>
@@ -86,7 +87,16 @@
     </div>
 
     <div class="control-group">
-      <label for="color">{label} Padding Color</label>
+      <label for="anchor">{label} Anchor</label>
+      <select id="anchor" bind:value={anchor}>
+        {#each anchorPositions as position}
+          <option value={position}>{position}</option>
+        {/each}
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="color">{label} Color</label>
       <select id="color" on:change={(e)=>{
         /** @type {HTMLSelectElement} */
         let el;
@@ -108,18 +118,9 @@
         {/each}
       </select>
     </div>
-
-    <div class="control-group">
-      <label for="anchor">{label} Anchor</label>
-      <select id="anchor" bind:value={anchor}>
-        {#each anchorPositions as position}
-          <option value={position}>{position}</option>
-        {/each}
-      </select>
-    </div>
   </div>
 
-  <div class="preview">
+  <div class="preview checkerboard">
     {#if b64}
       <img src="data:image/png;base64,{b64}" alt="{label} preview" />
     {:else}
@@ -131,9 +132,7 @@
 <style>
   .image-resizer {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    max-width: 600px;
     margin: 0 auto;
   }
 
@@ -141,6 +140,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
+    width: 150px;
   }
 
   .control-group {
@@ -167,11 +167,25 @@
     background-color: #f9f9f9;
     min-height: 200px;
     align-items: center;
+    flex-grow: 1;
+  }
+
+    /* Checkerboard pattern for transparent background */
+  .checkerboard {
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: #f9f9f9;
   }
 
   img {
     max-width: 100%;
     height: auto;
+    border: 3px solid aliceblue;
   }
 
   .loading {
