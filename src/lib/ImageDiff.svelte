@@ -64,11 +64,10 @@
   async function _status() {
     await tick();
     if (
-      (adjustedMaxDiffPx && diffPixels > adjustedMaxDiffPx) ||
-      (adjustedMaxDiffPct && diffPct > adjustedMaxDiffPct) ||
-      (!adjustedMaxDiffPx && !adjustedMaxDiffPct && diffPixels)
-    ) status = 'fail';
-    else status = 'pass';
+      (diffPixels <= adjustedMaxDiffPx) ||
+      (diffPct <= adjustedMaxDiffPct)
+    ) status = 'pass';
+    else status = 'fail';
   }
   const statusFn = () => {
     maxDiffPxAdj = 0;
@@ -146,7 +145,7 @@
 
 </script>
 
-<div class="image-diff w-48 lg:w-60 items-center flex flex-col bg-gray-100 gap-2 pb-2">
+<div class="image-diff w-44 lg:w-52 items-center flex flex-col bg-gray-100 gap-2 pb-2">
   <h2 class="font-bold leading-loose px-1 w-full text-center"
    class:bg-green-300={status === 'pass'}
    class:bg-gray-300={status === 'loading'}

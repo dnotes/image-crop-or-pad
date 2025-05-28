@@ -3,10 +3,16 @@
   import { resizeImage } from './resize-image.js';
   import { PNG } from 'pngjs/browser';
   import { Buffer } from 'buffer';
-  import check from '$lib/check.png';
   import { anchorPoints, hexToRgba } from './helpers.js';
   import colors from 'color-name'
   import ColorPicker from './ColorPicker.svelte';
+
+  import check from '$lib/check.png';
+  import checkface from '$lib/check-face.png';
+  const savedImages = {
+    check,
+    checkface,
+  }
 
   // Props with defaults
   /** @type {PNG} */
@@ -20,10 +26,15 @@
   /** @type {string} */
   let b64;
 
-    onMount(async () => {
+  /** @type {keyof typeof savedImages} */
+  export let imgName = 'check'
+
+  onMount(loadImg);
+
+  async function loadImg() {
     try {
       // Fetch the image as an ArrayBuffer
-      const response = await fetch(check);
+      const response = await fetch(savedImages[imgName]);
       const arrayBuffer = await response.arrayBuffer();
 
       // Convert ArrayBuffer to Buffer
@@ -37,8 +48,7 @@
     } catch (error) {
       console.error('Error loading image:', error);
     }
-  });
-
+  }
 
   function refresh() {
     b64='';
@@ -74,6 +84,8 @@
   // @ts-ignore*/
   $: if (color) rgba = colors[color] ? [...colors[color], 255] : [0,0,0,0];
 
+  $: if (imgName) loadImg()
+
 </script>
 
 <div class="flex flex-col">
@@ -107,9 +119,18 @@
           <ColorPicker bind:color bind:label bind:rgba />
         </div>
       {/if}
+
+      <div class="control-group">
+        <label for="image">Image</label>
+        <select id="image" aria-label="{label} Image" bind:value={imgName}>
+          {#each Object.keys(savedImages) as imgName}
+            <option value={imgName}>{imgName}</option>
+          {/each}
+        </select>
+      </div>
     </div>
 
-    <div class="border border-gray-300 bg-gray-50 p-4 flex justify-center items-center w-[262px] h-[262px] lg:w-[360px] lg:h-[360px]">
+    <div class="border border-gray-300 bg-gray-50 p-4 flex justify-center items-center w-[236px] h-[236px] lg:w-[300px] lg:h-[300px]">
       {#if b64}
         <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
       {:else}
