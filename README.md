@@ -2,6 +2,8 @@
 
 A tiny, fully-tested utility to resize images by cropping or padding, intended to assist with visual regression testing of components.
 
+See the demo site at https://image-crop-or-pad.pages.dev.
+
 ## Installation
 
 ```bash
@@ -28,7 +30,7 @@ const resizedImage = resizeImage(
   newHeight,
   {
     rgba: [255, 255, 255, 255], // White padding
-    anchor: "center" // Center the original image
+    anchor: "center" // Center the original image on the new canvas
   }
 );
 ```
