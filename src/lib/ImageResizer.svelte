@@ -4,7 +4,9 @@
   import { PNG } from 'pngjs/browser';
   import { Buffer } from 'buffer';
   import check from '$lib/check.png';
+  import { anchorPoints, hexToRgba } from './helpers.js';
   import colors from 'color-name'
+  import ColorPicker from './ColorPicker.svelte';
 
   // Props with defaults
   /** @type {PNG} */
@@ -14,7 +16,7 @@
   export let label = '';
 
   /** @type {PNG} */
-  let resizedImage;
+  export let resizedImage;
   /** @type {string} */
   let b64;
 
@@ -29,6 +31,8 @@
 
       // Parse the PNG
       image = PNG.sync.read(buffer);
+      width = image.width;
+      height = image.height;
 
     } catch (error) {
       console.error('Error loading image:', error);
@@ -58,96 +62,68 @@
   let height=100;
 
   /** @type {[number,number,number,number]} */
-  let rgba=[0,0,0,0];
+  export let rgba=[0,0,0,0];
 
-  /** @type {typeof anchorPositions[number]} */
-  let anchor="top left";
+  /** @type {import('./helpers.js').AnchorPoint} */
+  export let anchor="top left";
 
-  // Available anchor positions
-  /** @type {['top left','top','top right','left','center','right','bottom left','bottom','bottom right']} */
-  const anchorPositions = [
-    'top left', 'top', 'top right',
-    'left', 'center', 'right',
-    'bottom left', 'bottom', 'bottom right'
-  ];
+  export let hideColor = false;
+
+  export let color = 'lavender';
+
+  // @ts-ignore*/
+  $: if (color) rgba = colors[color] ? [...colors[color], 255] : [0,0,0,0];
 
 </script>
 
-<div class="image-resizer flex flex-row-reverse">
+<div class="flex flex-col">
+  {#if label}
+  <h3 class="font-bold text-xl bg-stone-200 px-2 mb-2 leading-loose w-full">{label}</h3>
+  {/if}
+  <div class="flex flex-row-reverse gap-3 mx-auto">
+    <div class="flex flex-col gap-2 w-[130px]">
+      <div class="control-group">
+        <label for="width">Width</label>
+        <input id="width" type="number" aria-label="{label} Width" bind:value={width} min="1" />
+      </div>
 
-  <div class="controls">
-    <div class="control-group">
-      <label for="width">{label} Width</label>
-      <input id="width" type="number" bind:value={width} min="1" />
+      <div class="control-group">
+        <label for="height">Height</label>
+        <input id="height" type="number" aria-label="{label} Height" bind:value={height} min="1" />
+      </div>
+
+      <div class="control-group">
+        <label for="anchor">Anchor</label>
+        <select id="anchor" aria-label="{label} Anchor" bind:value={anchor}>
+          {#each anchorPoints as position}
+            <option value={position}>{position}</option>
+          {/each}
+        </select>
+      </div>
+
+      {#if !hideColor}
+        <div class="control-group">
+          <label for="color">Color</label>
+          <ColorPicker bind:color bind:label bind:rgba />
+        </div>
+      {/if}
     </div>
 
-    <div class="control-group">
-      <label for="height">{label} Height</label>
-      <input id="height" type="number" bind:value={height} min="1" />
+    <div class="border border-gray-300 bg-gray-50 p-4 flex justify-center items-center w-[262px] h-[262px] lg:w-[360px] lg:h-[360px]">
+      {#if b64}
+        <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
+      {:else}
+        <div class="loading">Loading...</div>
+      {/if}
     </div>
-
-    <div class="control-group">
-      <label for="anchor">{label} Anchor</label>
-      <select id="anchor" bind:value={anchor}>
-        {#each anchorPositions as position}
-          <option value={position}>{position}</option>
-        {/each}
-      </select>
-    </div>
-
-    <div class="control-group">
-      <label for="color">{label} Color</label>
-      <select id="color" on:change={(e)=>{
-        /** @type {HTMLSelectElement} */
-        let el;
-        if (!e.target) {
-          console.error('no target');
-          return;
-        }
-        // @ts-ignore
-        el = e.target;
-        /** @ts-ignore @type {keyof typeof colors & 'transparent'} */
-        let value = el.value;
-        rgba[0]=colors[value]?.[0] ?? 0;
-        rgba[1]=colors[value]?.[1] ?? 0;
-        rgba[2]=colors[value]?.[2] ?? 0;
-        rgba[3]=value === 'transparent' ? 0 : 255;
-      }}>
-        <option value="transparent">transparent</option>
-        {#each Object.keys(colors) as item}
-          <option value="{item}">{item}</option>
-        {/each}
-      </select>
-    </div>
-  </div>
-
-  <div class="preview">
-    {#if b64}
-      <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
-    {:else}
-      <div class="loading">Loading...</div>
-    {/if}
   </div>
 </div>
 
 <style>
-  .image-resizer {
-    display: flex;
-    gap: 1rem;
-    margin: 0 auto;
-  }
-
-  .controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    width: 150px;
-  }
 
   .control-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
   }
 
   label {
@@ -158,17 +134,6 @@
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-
-  .preview {
-    border: 1px solid #ddd;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    background-color: #f9f9f9;
-    min-height: 200px;
-    align-items: center;
-    flex-grow: 1;
   }
 
     /* Checkerboard pattern for transparent background */

@@ -1,16 +1,19 @@
 <script>
-  import ImageResizer from '$lib/ImageResizer.svelte';
+  import ImageComparison from '$lib/ImageComparison.svelte';
   import Prose from '$lib/Prose.svelte';
 </script>
 
 <Prose>
 
-# Image Crop or Pad Playground
+# Image Crop or Pad Visual Regression Playground
 
-<ImageResizer />
+This is a playground for the kinds of issues that arise during visual regression testing.
 
+&nbsp;
 
 </Prose>
+
+<ImageComparison />
 
 
 

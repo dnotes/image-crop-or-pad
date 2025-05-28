@@ -1,7 +1,11 @@
 /**
+ * @typedef {[number,number,number,number]} RGBA
+ */
+
+/**
  * @typedef {Object} ResizeOptions
  * @property {[number,number,number,number]} [rgba] - The rgba values for padded pixels, 0-255, default [0,0,0,0]
- * @property {"top left"|"top right"|"bottom left"|"bottom right"|"top"|"bottom"|"left"|"right"|"center"} [anchor] - The anchor position for the resize operation, default "top left"
+ * @property {import('./helpers.js').AnchorPoint} [anchor] - The anchor position for the resize operation, default "top left"
  */
 
 /**

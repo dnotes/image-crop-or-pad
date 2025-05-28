@@ -4,7 +4,7 @@ Feature: ImageResizer.svelte
     Given I render the "ImageResizer" component
     And I wait for 50ms
     Then I should see the "preview" img
-    And the "preview" img should be 100x100
+    And the "preview" img should be 134x133
     And I should see a "Width" input
     And I should see a "Height" input
     And I should see a "Color" input
@@ -25,23 +25,23 @@ Feature: ImageResizer.svelte
 
     Scenario: Changing the width
       When for "Width" I enter "200"
-      Then the "preview" img should be 200x100
+      Then the "preview" img should be 200x133
 
     Scenario: Changing the height
       When for "Height" I enter "200"
-      Then the "preview" img should be 100x200
+      Then the "preview" img should be 134x200
 
     Scenario: Changing the background color
       When for "Width" I enter "201"
       And for "Color" I select "lavender"
-      Then the "preview" img should be 201x100
+      Then the "preview" img should be 201x133
       And the top right pixel should be "lavender"
 
     Scenario: Anchoring top right
       When for "Anchor" I select "top right"
       And for "Width" I enter "201"
       And for "Color" I select "lavender"
-      Then the "preview" img should be 201x100
+      Then the "preview" img should be 201x133
       And the top left pixel should be "lavender"
 
     Scenario: Anchoring in the center
@@ -57,4 +57,4 @@ Feature: ImageResizer.svelte
 
     Scenario: Huge image
       And for "Width" I enter "1000"
-      Then the "preview" img should be 1000x100
+      Then the "preview" img should be 1000x133
