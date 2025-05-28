@@ -18,8 +18,10 @@
 			<a href="/about">About</a>
 		</nav>
 	</header>
-	<main class="flex-grow px-5 lg:px-12">
-		{@render children()}
+	<main class="flex-grow px-5 lg:px-12 justify-center">
+		<div class="max-w-5xl mx-auto">
+			{@render children()}
+		</div>
 	</main>
 	<footer class="flex justify-center px-5 lg:px-12">
 
