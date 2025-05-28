@@ -4,6 +4,7 @@
   import { PNG } from 'pngjs/browser';
   import { Buffer } from 'buffer';
   import check from '$lib/check.png';
+  import colors from 'color-name'
 
   // Props with defaults
   /** @type {PNG} */
@@ -62,17 +63,6 @@
   /** @type {typeof anchorPositions[number]} */
   let anchor="top left";
 
-  // Color mapping for named colors
-  const colorMap = {
-    'transparent': [0, 0, 0, 0],
-    'lavender': [230, 230, 250, 255],
-    'red': [255, 0, 0, 255],
-    'green': [0, 255, 0, 255],
-    'blue': [0, 0, 255, 255],
-    'black': [0, 0, 0, 255],
-    'white': [255, 255, 255, 255]
-  };
-
   // Available anchor positions
   /** @type {['top left','top','top right','left','center','right','bottom left','bottom','bottom right']} */
   const anchorPositions = [
@@ -98,14 +88,22 @@
     <div class="control-group">
       <label for="color">{label} Padding Color</label>
       <select id="color" on:change={(e)=>{
+        /** @type {HTMLSelectElement} */
+        let el;
+        if (!e.target) {
+          console.error('no target');
+          return;
+        }
         // @ts-ignore
-        rgba[0]=colorMap[e.target.value][0];
-        // @ts-ignore
-        rgba[1]=colorMap[e.target.value][1];
-        // @ts-ignore
-        rgba[2]=colorMap[e.target.value][2];
+        el = e.target;
+        /** @ts-ignore @type {keyof typeof colors & 'transparent'} */
+        let value = el.value;
+        rgba[0]=colors[value]?.[0] ?? 0;
+        rgba[1]=colors[value]?.[1] ?? 0;
+        rgba[2]=colors[value]?.[2] ?? 0;
+        rgba[3]=value === 'transparent' ? 0 : 255;
       }}>
-        {#each Object.keys(colorMap) as item}
+        {#each Object.keys(colors) as item}
           <option value="{item}">{item}</option>
         {/each}
       </select>

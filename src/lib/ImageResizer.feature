@@ -31,17 +31,26 @@ Feature: ImageResizer.svelte
       When for "Height" I enter "200"
       Then the "preview" img should be 100x200
 
-    @todo
     Scenario: Changing the background color
-      When for "Width" I enter "200"
+      When for "Width" I enter "201"
       And for "Color" I select "lavender"
-      Then the "preview" img should be 200x100
-      And the top right pixel should be lavender
+      Then the "preview" img should be 201x100
+      And the top right pixel should be "lavender"
 
-    @todo
-    Scenario: Changing the anchor
+    Scenario: Anchoring top right
       When for "Anchor" I select "top right"
-      And for "Width" I enter "200"
+      And for "Width" I enter "201"
       And for "Color" I select "lavender"
-      Then the "preview" img should be 200x100
-      And the top left pixel should be lavender
+      Then the "preview" img should be 201x100
+      And the top left pixel should be "lavender"
+
+    Scenario: Anchoring in the center
+      When for "Anchor" I select "center"
+      And for "Width" I enter "201"
+      And for "Height" I enter "201"
+      And for "Color" I select "lavender"
+      Then the "preview" img should be 201x201
+      And the right pixel should be "lavender"
+      And the left pixel should be "lavender"
+      And the top pixel should be "lavender"
+      And the bottom pixel should be "lavender"
