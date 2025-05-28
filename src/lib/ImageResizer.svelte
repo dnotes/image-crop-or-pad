@@ -78,6 +78,7 @@
   export let anchor="top left";
 
   export let hideColor = false;
+  export let hideFiles = false;
 
   export let color = 'lavender';
 
@@ -120,21 +121,25 @@
         </div>
       {/if}
 
-      <div class="control-group">
-        <label for="image">Image</label>
-        <select id="image" aria-label="{label} Image" bind:value={imgName}>
-          {#each Object.keys(savedImages) as imgName}
-            <option value={imgName}>{imgName}</option>
-          {/each}
-        </select>
-      </div>
+      {#if !hideFiles}
+        <div class="control-group">
+          <label for="image">Image</label>
+          <select id="image" aria-label="{label} Image" bind:value={imgName}>
+            {#each Object.keys(savedImages) as imgName}
+              <option value={imgName}>{imgName}</option>
+            {/each}
+          </select>
+        </div>
+      {/if}
     </div>
 
     <div class="border border-gray-300 bg-gray-50 p-4 flex justify-center items-center w-[236px] h-[236px] lg:w-[300px] lg:h-[300px]">
       {#if b64}
         <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
       {:else}
-        <div class="loading">Loading...</div>
+        <div class="loading">Loading...
+          <noscript>(you need Javascript for this part.)</noscript>
+        </div>
       {/if}
     </div>
   </div>

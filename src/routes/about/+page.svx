@@ -1,4 +1,29 @@
+<script>
+  import ImageResizer from '$lib/ImageResizer.svelte';
+</script>
+
 <div class="prose prose-sm prose-p:leading-snug prose-p:text-justify max-w-4xl">
+
+## What is this package?
+
+The `image-crop-or-pad` package is a tool for resizing raw images so that they work for visual regression testing.
+The idea came from [a GitHub discussion in the issue queue for pixelmatch](https://github.com/mapbox/pixelmatch/issues/25).
+The package is:
+
+- [x] Tiny (less than 1Kb)
+- [x] Dependency-free
+- [x] Isomorphic (works in Node and in the browser)
+
+<div class="sm:float-right sm:ml-8 my-5">
+
+<ImageResizer hideFiles />
+
+</div>
+
+## What does it do?
+
+It resizes an image, either cropping or padding it, from a particular anchor point. You can play with all of the
+options in this widget. Here are a few thoughts about why this might be useful in relation to visual regression testing:
 
 ## Visual regression testing is awesome
 
@@ -66,7 +91,13 @@ The one taken by most open-source testing libraries is to...
 
   I think this might be a good compromise in many cases.
 
+## Conclusions
+
+This is an exploration of some of the issues related to image size differences in visual regression testing.
+Feel free to use the [playground](/playground) to experiment with different images and try out these strategies.
+
   [pixelmatch]: https://npmjs.com/package/pixelmatch
+
 
 </div>
 

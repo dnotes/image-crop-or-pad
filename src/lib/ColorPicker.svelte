@@ -8,7 +8,7 @@
   $: if (color) rgba = colors[color] ? [...colors[color], 255] : [0,0,0,0];
 </script>
 
-<select class="ml-2 mr-px" id="color" aria-label="{label} Color" bind:value={color}>
+<select class="mr-px" id="color" aria-label="{label} Color" bind:value={color}>
   <option>lavender</option>
   <option>white</option>
   <option>black</option>

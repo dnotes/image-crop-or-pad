@@ -5,6 +5,7 @@
   import { anchorPoints, hexToRgba, type AnchorPoint } from './helpers'
   import type { RGBA } from "./resize-image";
   import ColorPicker from "./ColorPicker.svelte";
+  import Prose from "./Prose.svelte";
 
   let img1:PNG
   let img2:PNG
@@ -35,6 +36,10 @@
 </script>
 
 <div class="flex flex-col gap-5 w-full">
+
+  <Prose>
+    <h3>Settings:</h3>
+  </Prose>
 
   <div class="flex gap-3 flex-wrap">
     <div class="flex flex-col gap-3">
@@ -77,10 +82,20 @@
     </div>
   </div>
 
+  <Prose>
+    <h3>Images:</h3>
+  </Prose>
+
   <div class="flex flex-row gap-5 justify-start flex-wrap">
     <ImageResizer label="Img 1" bind:image={img1} bind:resizedImage={resizedImg1} bind:color hideColor />
     <ImageResizer label="Img 2" bind:image={img2} bind:resizedImage={resizedImg2} bind:color hideColor />
   </div>
+
+  <Prose>
+    <h3>Strategies and Results:</h3>
+  </Prose>
+
+
   <div class="flex flex-row gap-6 flex-wrap">
     <div class="flex gap-6">
       <div>

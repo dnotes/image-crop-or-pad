@@ -14,8 +14,8 @@
 			<a href="/">image-crop-or-pad</a>
 		</h1>
 		<nav class="flex gap-2">
-			<a href="/">Play</a>
-			<a href="/why">Why?</a>
+			<a href="/">Playground</a>
+			<a href="/about">About</a>
 		</nav>
 	</header>
 	<main class="flex-grow px-5 lg:px-12">
