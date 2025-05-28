@@ -1,0 +1,72 @@
+<div class="prose prose-sm prose-p:leading-snug prose-p:text-justify max-w-4xl">
+
+## Visual regression testing is awesome
+
+Visual regression testing is a technique that captures screenshots of your UI components or pages
+and compares them against baseline images to detect unintended visual changes. It serves as a safety
+net for your UI, ensuring that styling changes, component updates, or dependency upgrades don't break
+your application's appearance. This approach complements functional testing by focusing specifically
+on how things look rather than just how they behave. It's fantastic and everyone should be using it.
+
+## ...mostly...
+
+However, when running visual regression tests you'll often encounter minor differences between screenshots that don't
+represent actual bugs. These false positives can be caused by anti-aliasing, font rendering differences across platforms,
+or sub-pixel variations. Testing frameworks address these issues through various strategies: setting a maximum number
+of different pixels allowed (e.g., "fail only if more than 100 pixels differ"), using percentage thresholds
+(e.g., "accept up to 0.5% difference"), or implementing region-based masking to ignore specific dynamic areas like
+dates or animation states. These techniques help reduce false positives while still catching meaningful visual regressions.
+
+## ...but sometimes screenshots differ in size
+
+The worst issue of all, though, is images that don't match up in size. This can happen for numerous reasons: different
+browser rendering engines, varying screen densities, responsive design breakpoints, font rendering differences, or even
+just slight variations in how DOM elements are positioned across environments. The most common open-source library for
+image comparison, [pixelmatch], refuses to compare images at all if they are different sizes.
+
+## What do you do?
+
+The first thing you should consider is capturing smaller page elements, like components, with mock data for testing.
+This lets you focus on the look of each component, and should result in fewer image size issues.
+
+However, even a screenshot of a *single button with the same text* can be slightly different sizes depending on the browser,
+operating system, environment, and probably other factors. At that point, there are several strategies for dealing with the issue.
+The one taken by most open-source testing libraries is to...
+
+* ### Fail
+
+  ...fail fast, without comparing the images at all. As mentioned, this is what happens if you try to compare differently sized
+  images with [pixelmatch], which is the default image comparison tool for most JS testing libraries.
+
+  I think we can do better, so here are a few more potential strategies for dealing with the issue:
+
+* ### Crop
+
+  First, we could crop the larger image down to the size of the smaller. This would result in fewer false positives,
+  but it would also completely obscure and ignore any differences outside of the area of the cropped image, and that seems
+  like it could [occasionally be disastrous](https://en.wikipedia.org/wiki/ACropalypse).
+
+  I still think this might be appropriate in some circumstances, for example when testing components as part of a style guide.
+  But, it would at least need a maximum crop setting.
+
+* ### Pad
+
+  We could pad the smaller image up to the size of the larger, and add a certain maximum number of pixels or percentage that
+  the images were allowed to be different. This would also ignore any differences outside of the shared area, but at least you
+  could see those differences in the diff file.
+
+  However, what if the differences were not caused by the padding, but by other differences in the content?
+
+  It seems like that could also be a problem.
+
+* ### Pad, and adjust the maximum allowed difference
+
+  As a tweak to the padding strategy, we could adjust the maxiumum difference based on the size differential;
+  so that the amount of difference between the images would be maintained even when padding was necessary.
+
+  I think this might be a good compromise in many cases.
+
+  [pixelmatch]: https://npmjs.com/package/pixelmatch
+
+</div>
+

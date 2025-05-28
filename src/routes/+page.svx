@@ -1,0 +1,16 @@
+<script>
+  import ImageResizer from '$lib/ImageResizer.svelte';
+  import Prose from '$lib/Prose.svelte';
+</script>
+
+<Prose>
+
+# Image Crop or Pad Playground
+
+<ImageResizer />
+
+
+</Prose>
+
+
+
