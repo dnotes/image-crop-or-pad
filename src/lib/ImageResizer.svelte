@@ -120,9 +120,9 @@
     </div>
   </div>
 
-  <div class="preview checkerboard">
+  <div class="preview">
     {#if b64}
-      <img src="data:image/png;base64,{b64}" alt="{label} preview" />
+      <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
     {:else}
       <div class="loading">Loading...</div>
     {/if}
@@ -173,10 +173,10 @@
     /* Checkerboard pattern for transparent background */
   .checkerboard {
     background-image:
-      linear-gradient(45deg, #ccc 25%, transparent 25%),
-      linear-gradient(-45deg, #ccc 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #ccc 75%),
-      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+      linear-gradient(45deg, #eee 25%, transparent 25%),
+      linear-gradient(-45deg, #eee 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #eee 75%),
+      linear-gradient(-45deg, transparent 75%, #eee 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     background-color: #f9f9f9;
@@ -185,7 +185,6 @@
   img {
     max-width: 100%;
     height: auto;
-    border: 3px solid aliceblue;
   }
 
   .loading {

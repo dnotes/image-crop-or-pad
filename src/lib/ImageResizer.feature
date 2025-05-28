@@ -54,3 +54,7 @@ Feature: ImageResizer.svelte
       And the left pixel should be "lavender"
       And the top pixel should be "lavender"
       And the bottom pixel should be "lavender"
+
+    Scenario: Huge image
+      And for "Width" I enter "1000"
+      Then the "preview" img should be 1000x100

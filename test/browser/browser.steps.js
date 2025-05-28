@@ -12,7 +12,9 @@ Then('the {string} img should be {int}x{int}', async function (world, name, w, h
   let img = await world.page.getByRole('img', { name })
   /** @type {HTMLImageElement} */
   let el = await img.element()
-  let { width, height } = await el.getBoundingClientRect()
+
+  let png = PNG.sync.read(Buffer.from(el.src.replace('data:image/png;base64,', ''), 'base64'))
+  let { width, height } = png
   expect(width).toBe(w)
   expect(height).toBe(h)
 });
@@ -21,8 +23,8 @@ Then('the {anchor} pixel should be {string}', async function(world, anchor, colo
   let img = await world.page.getByRole('img', { name: 'preview' })
   /** @type {HTMLImageElement} */
   let el = await img.element()
-  let { width, height } = await el.getBoundingClientRect()
   let png = PNG.sync.read(Buffer.from(el.src.replace('data:image/png;base64,', ''), 'base64'))
+  let { width, height } = png
   let data = Array.from(png.data)
   expect(data.length).toBe(width * height * 4)
   let x = anchor.includes('left') ? 0 : anchor.includes('right') ? width - 1 : Math.floor(width / 2)
