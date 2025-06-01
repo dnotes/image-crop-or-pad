@@ -94,7 +94,7 @@ The one taken by most open-source testing libraries is to...
 ## Conclusions
 
 This is an exploration of some of the issues related to image size differences in visual regression testing.
-Feel free to use the [playground](/playground) to experiment with different images and try out these strategies.
+Feel free to use the [playground](/) to experiment with different images and try out these strategies.
 
   [pixelmatch]: https://npmjs.com/package/pixelmatch
 
