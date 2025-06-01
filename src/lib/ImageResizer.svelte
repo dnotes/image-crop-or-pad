@@ -11,13 +11,15 @@
   import check from '$lib/check.png';
   import checkface from '$lib/check-face.png';
   import testpage from '$lib/testpage.png';
+  import testpage_changed from '$lib/testpage_changed.png';
   import testbutton from '$lib/testbutton.png';
 
   const savedImages = {
+    testbutton,
     check,
     checkface,
     testpage,
-    testbutton,
+    testpage_changed,
   }
 
   // Props with defaults
