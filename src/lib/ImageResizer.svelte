@@ -6,6 +6,7 @@
   import { anchorPoints, hexToRgba } from './helpers.js';
   import colors from 'color-name'
   import ColorPicker from './ColorPicker.svelte';
+  import { browser } from '$app/environment';
 
   import check from '$lib/check.png';
   import checkface from '$lib/check-face.png';
@@ -29,10 +30,12 @@
   /** @type {keyof typeof savedImages} */
   export let imgName = 'check'
 
-  onMount(loadImg);
+  onMount(async ()=>{
+    loadImg()
+  });
 
   async function loadImg() {
-    try {
+    if (browser) try {
       // Fetch the image as an ArrayBuffer
       const response = await fetch(savedImages[imgName]);
       const arrayBuffer = await response.arrayBuffer();
