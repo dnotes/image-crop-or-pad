@@ -10,9 +10,14 @@
 
   import check from '$lib/check.png';
   import checkface from '$lib/check-face.png';
+  import testpage from '$lib/testpage.png';
+  import testbutton from '$lib/testbutton.png';
+
   const savedImages = {
     check,
     checkface,
+    testpage,
+    testbutton,
   }
 
   // Props with defaults
@@ -90,6 +95,9 @@
 
   $: if (imgName) loadImg()
 
+  let imgWidth = 0;
+  let imgHeight = 0;
+
 </script>
 
 <div class="flex flex-col">
@@ -138,7 +146,10 @@
 
     <div class="border border-gray-300 bg-gray-50 p-4 flex justify-center items-center w-[236px] h-[236px] lg:w-[300px] lg:h-[300px]">
       {#if b64}
-        <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview" />
+        <img class="checkerboard" src="data:image/png;base64,{b64}" alt="{label} preview"
+          bind:clientHeight={imgHeight} bind:clientWidth={imgWidth}
+          style="{imgHeight > imgWidth ? 'height: 100%; width: auto;' : 'width: 100%; height: auto;'}"
+        />
       {:else}
         <div class="loading">Loading...
           <noscript>(you need Javascript for this part.)</noscript>
@@ -175,11 +186,6 @@
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     background-color: #f9f9f9;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
   }
 
   .loading {
