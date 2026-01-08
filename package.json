@@ -5,16 +5,23 @@
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
+  "types": "dist/resize-image.d.ts",
   "exports": {
-    "import": "./dist/index.esm.js",
-    "require": "./dist/index.cjs"
+    "import": {
+      "types": "./dist/resize-image.d.ts",
+      "default": "./dist/index.esm.js"
+    },
+    "require": {
+      "types": "./dist/resize-image.d.ts",
+      "default": "./dist/index.cjs"
+    }
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite dev",
-    "build": "rollup -c && vite build",
+    "build": "rollup -c && tsc -p tsconfig.build.json && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
@@ -57,6 +64,7 @@
     "@types/pngjs": "^6.0.5",
     "@vitest/browser": "^3.1.4",
     "buffer": "^6.0.3",
+    "color-name": "^2.1.0",
     "mdsvex": "^0.12.3",
     "pixelmatch": "^7.1.0",
     "playwright": "^1.52.0",
