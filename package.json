@@ -1,13 +1,13 @@
 {
   "name": "image-crop-or-pad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny, fully-tested utility to resize raw image data in node or browser, intended for visual regression testing.",
   "type": "module",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "exports": {
     "import": "./dist/index.esm.js",
-    "require": "./dist/index.cjs.js"
+    "require": "./dist/index.cjs"
   },
   "files": [
     "dist"
